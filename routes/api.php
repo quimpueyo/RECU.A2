@@ -11,14 +11,15 @@ use App\Models\Animal;
 // CRUD DE DUEÑOS
 // ==========================================
 
-// Muestra todos los dueños registrados.
+// Obtener todos los dueños
 Route::get('duenos', function () {
     $duenos = Dueno::all();
     return response()->json($duenos);
 });
 
-// Crea un nuevo dueño.
+// Crear un nuevo dueño
 Route::post('duenos', function (Request $request) {
+    // Comprobar que los datos obligatorios se han enviado
     $request->validate([
         'nombre' => 'required|string',
         'apellido' => 'required|string',
@@ -27,7 +28,7 @@ Route::post('duenos', function (Request $request) {
     return response()->json($dueno, 201);
 });
 
-// Muestra un dueño en detalle.
+// Mostrar un dueño concreto
 Route::get('duenos/{id}', function ($id) {
     $dueno = Dueno::find($id);
     if (!$dueno) {
@@ -36,12 +37,13 @@ Route::get('duenos/{id}', function ($id) {
     return response()->json($dueno);
 });
 
-// Modifica los datos de un dueño.
+// Actualizar los datos de un dueño
 Route::put('duenos/{id}', function (Request $request, $id) {
     $dueno = Dueno::find($id);
     if (!$dueno) {
         return response()->json(['message' => 'Dueño no encontrado'], 404);
     }
+    // Comprobar que los datos obligatorios se han enviado
     $request->validate([
         'nombre' => 'required|string',
         'apellido' => 'required|string',
@@ -50,7 +52,7 @@ Route::put('duenos/{id}', function (Request $request, $id) {
     return response()->json($dueno);
 });
 
-// Borra un dueño.
+// Eliminar el dueño seleccionado
 Route::delete('duenos/{id}', function ($id) {
     $dueno = Dueno::find($id);
     if (!$dueno) {
@@ -64,14 +66,15 @@ Route::delete('duenos/{id}', function ($id) {
 // CRUD DE ANIMALES
 // ==========================================
 
-// Muestra el listado de todos los animales.
+// Obtener todos los animales
 Route::get('animales', function () {
     $animales = Animal::all();
     return response()->json($animales);
 });
 
-// Guarda un nuevo animal en la base de datos.
+// Crear un nuevo animal
 Route::post('animales', function (Request $request) {
+    // Comprobar que los datos obligatorios se han enviado
     $request->validate([
         'nombre' => 'required|string',
         'tipo' => 'required|in:perro,gato',
@@ -82,7 +85,7 @@ Route::post('animales', function (Request $request) {
     return response()->json($animal, 201);
 });
 
-// Muestra la información de un animal concreto por su ID.
+// Mostrar un animal concreto
 Route::get('animales/{id}', function ($id) {
     $animal = Animal::find($id);
     if (!$animal) {
@@ -91,7 +94,7 @@ Route::get('animales/{id}', function ($id) {
     return response()->json($animal);
 });
 
-// Actualiza los datos de un animal existente.
+// Actualizar un animal
 Route::put('animales/{id}', function (Request $request, $id) {
     $animal = Animal::find($id);
     if (!$animal) {
@@ -107,7 +110,7 @@ Route::put('animales/{id}', function (Request $request, $id) {
     return response()->json($animal);
 });
 
-// Elimina un animal de la base de datos.
+// Eliminar el animal seleccionado
 Route::delete('animales/{id}', function ($id) {
     $animal = Animal::find($id);
     if (!$animal) {
