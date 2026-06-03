@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Animal extends Model
+{
+    use HasFactory;
+
+    // Nombre de la tabla explícito (para evitar que busque 'animals')
+    protected $table = 'animales';
+
+    // Campos que se pueden asignar masivamente
+    protected $fillable = [
+        'nombre',
+        'tipo',
+        'peso',
+        'enfermedad',
+        'comentarios',
+        'dueno_id',
+    ];
+
+    /**
+     * Relación: Un animal pertenece a un dueño.
+     */
+    public function dueno()
+    {
+        return $this->belongsTo(Dueno::class);
+    }
+}
